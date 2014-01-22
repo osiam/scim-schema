@@ -95,21 +95,36 @@ public class Group extends Resource {
          * Constructs a new builder by copying all values from the given {@link Group}
          * 
          * @param group
-         *            {@link Group} to be copied from
+         *        {@link Group} to be copied from
          */
         public Builder(Group group) {
             super(group);
+            this.schemas.add(Constants.GROUP_CORE_SCHEMA);
+
             displayName = group.displayName;
             members = group.members;
+        }
+
+        /**
+         * Constructs a new builder by copying all values from the given {@link Group} and sets the displayName
+         * 
+         * @param group
+         *        {@link Group} to be copied from
+         * @param displayName
+         *        the display name
+         */
+        public Builder(Group group, String displayName) {
+            this(group);
+            this.displayName = displayName;
         }
 
         /**
          * Constructs a new builder and sets the display name (See {@link Group#getDisplayName()}).
          * 
          * @param displayName
-         *            the display name
+         *        the display name
          */
-        public  Builder(String displayName) {
+        public Builder(String displayName) {
             this();
             if (displayName == null) {
                 throw new IllegalArgumentException("The given resource must not be null");
@@ -145,7 +160,7 @@ public class Group extends Resource {
          * Sets the list of members as {@link Set} (See {@link Group#getMembers()}).
          * 
          * @param members
-         *            the set of members
+         *        the set of members
          * @return the builder itself
          */
         public Builder setMembers(Set<MemberRef> members) {
