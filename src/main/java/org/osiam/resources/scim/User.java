@@ -486,6 +486,8 @@ public class User extends Resource {
          */
         public Builder(User user) {
             super(user);
+            this.schemas.add(Constants.USER_CORE_SCHEMA);
+            
             this.userName = user.userName;
             this.name = user.name;
             this.displayName = user.displayName;
@@ -508,6 +510,19 @@ public class User extends Resource {
             this.roles = Objects.firstNonNull(user.roles, this.roles);
             this.x509Certificates = Objects.firstNonNull(user.x509Certificates, this.x509Certificates);
             this.extensions = Objects.firstNonNull(user.extensions, this.extensions);
+        }
+
+        /**
+         * Constructs a new builder by copying all values from the given {@link User} and sets the given userName
+         * 
+         * @param user
+         *        a old {@link User}
+         * @param userName
+         *        Unique identifier for the User (See {@link User#getUserName()})
+         */
+        public Builder(User user, String userName) {
+            this(user);
+            this.userName = userName;
         }
 
         /**
