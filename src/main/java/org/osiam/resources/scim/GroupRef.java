@@ -25,14 +25,14 @@ package org.osiam.resources.scim;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
- * This class represents a photo attribute.
+ * This class represents a Reference of a Group
  * 
  * <p>
  * For more detailed information please look at the <a
  * href="http://tools.ietf.org/html/draft-ietf-scim-core-schema-02#section-3.2">SCIM core schema 2.0, section 3.2</a>
  * </p>
  */
-public class Photo extends MultiValuedAttribute {
+public class GroupRef extends MultiValuedAttribute {
 
     @JsonSerialize
     private Type type;
@@ -40,17 +40,12 @@ public class Photo extends MultiValuedAttribute {
     /**
      * Default constructor for Jackson
      */
-    private Photo() {
+    private GroupRef() {
     }
 
-    private Photo(Builder builder) {
+    private GroupRef(Builder builder) {
         super(builder);
         this.type = builder.type;
-    }
-
-    @Override
-    public String getOperation() {
-        return super.getOperation();
     }
 
     @Override
@@ -61,11 +56,6 @@ public class Photo extends MultiValuedAttribute {
     @Override
     public String getDisplay() {
         return super.getDisplay();
-    }
-
-    @Override
-    public boolean isPrimary() {
-        return super.isPrimary();
     }
 
     /**
@@ -82,6 +72,11 @@ public class Photo extends MultiValuedAttribute {
      */
     public Type getType() {
         return type;
+    }
+
+    @Override
+    public String getReference() {
+        return super.getReference();
     }
 
     @Override
@@ -103,7 +98,7 @@ public class Photo extends MultiValuedAttribute {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Photo other = (Photo) obj;
+        GroupRef other = (GroupRef) obj;
         if (type == null) {
             if (other.type != null) {
                 return false;
@@ -115,37 +110,16 @@ public class Photo extends MultiValuedAttribute {
     }
 
     /**
-     * Builder class that is used to build {@link Photo} instances
+     * Builder class that is used to build {@link GroupRef} instances
      */
     public static class Builder extends MultiValuedAttribute.Builder {
 
         private Type type;
 
-        public Builder() {
-        }
-
-        /**
-         * builds an Builder based of the given Attribute
-         * 
-         * @param photo
-         *        existing Attribute
-         */
-        public Builder(Photo photo) {
-            super(photo);
-            type = photo.type;
-        }
-
-        @Override
-        public Builder setOperation(String operation) {
-            super.setOperation(operation);
-            return this;
-        }
-
         @Override
         public Builder setDisplay(String display) {
             super.setDisplay(display);
             return this;
-
         }
 
         @Override
@@ -167,25 +141,32 @@ public class Photo extends MultiValuedAttribute {
         }
 
         @Override
-        public Builder setPrimary(boolean primary) {
-            super.setPrimary(primary);
+        public Builder setReference(String reference) {
+            super.setReference(reference);
             return this;
         }
 
         @Override
-        public Photo build() {
-            return new Photo(this);
+        public GroupRef build() {
+            return new GroupRef(this);
         }
+
     }
 
     /**
-     * Represents a photo type. Canonical values are available as static constants.
+     * Represents an Group reference type.
      */
     public static class Type extends MultiValuedAttributeType {
-        public static final Type PHOTO = new Type("photo");
-        public static final Type THUMBNAIL = new Type("thumbnail");
+        /**
+         * The User is direct in the actual Group
+         */
+        public static final Type DIRECT = new Type("direct");
+        /**
+         * The User is not direct in the actual Group but in a Group that is in the actual Group
+         */
+        public static final Type INDIRECT = new Type("indirect");
 
-        public Type(String value) {
+        private Type(String value) {
             super(value);
         }
     }
