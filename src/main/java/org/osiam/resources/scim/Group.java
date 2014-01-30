@@ -23,11 +23,12 @@
 
 package org.osiam.resources.scim;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.common.collect.ImmutableSet;
 
 /**
  * This class represent a Group resource.
@@ -75,7 +76,7 @@ public class Group extends Resource {
      * @return the list of Members as a Set
      */
     public Set<MemberRef> getMembers() {
-        return members;
+        return ImmutableSet.copyOf(members);
     }
 
     /**
@@ -142,7 +143,7 @@ public class Group extends Resource {
         }
 
         /**
-         * Sets the list of members as {@link Set} (See {@link Group#getMembers()}).
+         * Sets the Set of members as {@link Set} (See {@link Group#getMembers()}).
          * 
          * @param members
          *            the set of members

@@ -23,11 +23,6 @@
 
 package org.osiam.resources.scim
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -84,7 +79,7 @@ class UserSpec extends Specification {
     def 'should generate a user based on builder'() {
         given:
 
-        Extension extension = getExtension('extension');
+        Extension extension = getExtension('extension')
         Meta meta = new Meta.Builder().build()
         Address address = getAddress()
         Email email = getEmail()
@@ -99,25 +94,25 @@ class UserSpec extends Specification {
         def builder = new User.Builder('username')
                 .setId('id')
                 .setActive(true)
-                .setAddresses([address] as List)
+                .setAddresses([address] as Set)
                 .setDisplayName('displayName')
-                .setEmails([email] as List)
-                .setEntitlements([entitlement] as List)
+                .setEmails([email] as Set)
+                .setEntitlements([entitlement] as Set)
                 .setExternalId('externalId')
-                .setIms([im] as List)
+                .setIms([im] as Set)
                 .setLocale('de_DE')
                 .setName(name)
                 .setNickName('nickname')
                 .setPassword('password')
-                .setPhoneNumbers([phoneNumber] as List)
-                .setPhotos([photo] as List)
+                .setPhoneNumbers([phoneNumber] as Set)
+                .setPhotos([photo] as Set)
                 .setPreferredLanguage('german')
                 .setProfileUrl('/user/username')
-                .setRoles([role] as List)
+                .setRoles([role] as Set)
                 .setTimezone('MEZ')
                 .setTitle('title')
                 .setSchemas(['schema'] as Set)
-                .setX509Certificates([x509Certificat] as List)
+                .setX509Certificates([x509Certificat] as Set)
                 .setMeta(meta)
                 .setUserType('userType')
                 .addExtension(extension);
@@ -156,7 +151,7 @@ class UserSpec extends Specification {
     @Unroll
     def 'creating a user with copy builder copies #field field if present'() {
         given:
-        def user = new User.Builder('user').build()
+        User user = new User.Builder('user').build()
 
         when:
         user[(field)] = value
@@ -167,15 +162,15 @@ class UserSpec extends Specification {
 
         where:
         field              | value
-        'emails'           | [new Email.Builder().build()]
-        'phoneNumbers'     | [new PhoneNumber.Builder().build()]
-        'ims'              | [new Im.Builder().build()]
-        'photos'           | [new Photo.Builder().build()]
-        'addresses'        | [new Address.Builder().build()]
-        'groups'           | [new GroupRef.Builder().build()]
-        'entitlements'     | [new Entitlement.Builder().build()]
-        'roles'            | [new Role.Builder().build()]
-        'x509Certificates' | [new X509Certificate.Builder().build()]
+        'emails'           | [new Email.Builder().build()] as Set
+        'phoneNumbers'     | [new PhoneNumber.Builder().build()] as Set
+        'ims'              | [new Im.Builder().build()] as Set
+        'photos'           | [new Photo.Builder().build()] as Set
+        'addresses'        | [new Address.Builder().build()] as Set
+        'groups'           | [new GroupRef.Builder().build()] as Set
+        'entitlements'     | [new Entitlement.Builder().build()] as Set
+        'roles'            | [new Role.Builder().build()] as Set
+        'x509Certificates' | [new X509Certificate.Builder().build()] as Set
         'extensions'       | [(EXTENSION_URN): (EXTENSION_EMPTY)]
     }
 
@@ -193,23 +188,25 @@ class UserSpec extends Specification {
 
         where:
         field              | value
-        'emails'           | []
-        'phoneNumbers'     | []
-        'ims'              | []
-        'photos'           | []
-        'addresses'        | []
-        'groups'           | []
-        'entitlements'     | []
-        'roles'            | []
-        'x509Certificates' | []
+        'emails'           | [] as Set
+        'phoneNumbers'     | [] as Set
+        'ims'              | [] as Set
+        'photos'           | [] as Set
+        'addresses'        | [] as Set
+        'groups'           | [] as Set
+        'entitlements'     | [] as Set
+        'roles'            | [] as Set
+        'x509Certificates' | [] as Set
         'extensions'       | [:]
     }
 
     def 'enriching extension using the getter raises exception'() {
         given:
         def user = new User.Builder('test2').build()
+        
         when:
         user.getAllExtensions().put(EXTENSION_URN, EXTENSION_EMPTY)
+        
         then:
         thrown(UnsupportedOperationException)
     }

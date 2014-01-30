@@ -54,42 +54,19 @@ class GroupSpec extends Specification {
         group.id == 'id'
     }
 
-    def 'should be able to enrich group members'() {
-        given:
-        def group = new Group.Builder('display').build()
-        when:
-        group.members.add(new MemberRef.Builder().build())
-
-        then:
-        group.members.size() == 1
-    }
-
-    def 'members should be a must exist implementation'() {
-        given:
-        def group = new Group.Builder('display').build()
-
-        when:
-        group.members.add(new MemberRef.Builder().build())
-
-        then:
-        group.members != null
-
-    }
-
-
     def 'should contain empty public constructor for json serializing'() {
         when:
-        def result = new Group()
+        Group result = new Group()
         then:
         result
     }
 
     def 'should be able to clone a group'() {
         given:
-        def group = new Group.Builder('display').
+        Group group = new Group.Builder('display').
                 setId('id').build()
         when:
-        def result = new Group.Builder(group).build()
+        Group result = new Group.Builder(group).build()
 
         then:
         group.displayName == result.displayName

@@ -23,11 +23,17 @@
 
 package org.osiam.resources.scim;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.base.Objects;
-
-import java.util.*;
+import com.google.common.collect.ImmutableSet;
 
 /**
  * User resources are meant to enable expression of common User informations. With the core attributes it should be
@@ -54,15 +60,15 @@ public class User extends Resource {
     private String timezone;
     private Boolean active;
     private String password = "";
-    private List<Email> emails = new ArrayList<>();
-    private List<PhoneNumber> phoneNumbers = new ArrayList<>();
-    private List<Im> ims = new ArrayList<>();
-    private List<Photo> photos = new ArrayList<>();
-    private List<Address> addresses = new ArrayList<>();
-    private List<GroupRef> groups = new ArrayList<>();
-    private List<Entitlement> entitlements = new ArrayList<>();
-    private List<Role> roles = new ArrayList<>();
-    private List<X509Certificate> x509Certificates = new ArrayList<>();
+    private Set<Email> emails = new HashSet<>();
+    private Set<PhoneNumber> phoneNumbers = new HashSet<>();
+    private Set<Im> ims = new HashSet<>();
+    private Set<Photo> photos = new HashSet<>();
+    private Set<Address> addresses = new HashSet<>();
+    private Set<GroupRef> groups = new HashSet<>();
+    private Set<Entitlement> entitlements = new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
+    private Set<X509Certificate> x509Certificates = new HashSet<>();
     private Map<String, Extension> extensions = new HashMap<>();
 
     /**
@@ -272,8 +278,8 @@ public class User extends Resource {
      * 
      * @return the email addresses of the {@link User}
      */
-    public List<Email> getEmails() {
-        return emails;
+    public Set<Email> getEmails() {
+        return ImmutableSet.copyOf(emails);
     }
 
     /**
@@ -287,8 +293,8 @@ public class User extends Resource {
      * 
      * @return the phone numbers of the {@link User}
      */
-    public List<PhoneNumber> getPhoneNumbers() {
-        return phoneNumbers;
+    public Set<PhoneNumber> getPhoneNumbers() {
+        return ImmutableSet.copyOf(phoneNumbers);
     }
 
     /**
@@ -302,8 +308,8 @@ public class User extends Resource {
      * 
      * @return the ims of the {@link User}
      */
-    public List<Im> getIms() {
-        return ims;
+    public Set<Im> getIms() {
+        return ImmutableSet.copyOf(ims);
     }
 
     /**
@@ -317,8 +323,8 @@ public class User extends Resource {
      * 
      * @return the photo URL's of the {@link User}
      */
-    public List<Photo> getPhotos() {
-        return photos;
+    public Set<Photo> getPhotos() {
+        return ImmutableSet.copyOf(photos);
     }
 
     /**
@@ -332,12 +338,12 @@ public class User extends Resource {
      * 
      * @return the addresses of the {@link User}
      */
-    public List<Address> getAddresses() {
-        return addresses;
+    public Set<Address> getAddresses() {
+        return ImmutableSet.copyOf(addresses);
     }
 
     /**
-     * Gets a list of groups that the user belongs to.
+     * Gets a Set of groups that the user belongs to.
      * 
      * <p>
      * For more detailed information please look at the <a
@@ -345,14 +351,14 @@ public class User extends Resource {
      * 6.2</a>
      * </p>
      * 
-     * @return a list of all {@link Group}s where the {@link User} is a member of
+     * @return a Set of all {@link Group}s where the {@link User} is a member of
      */
-    public List<GroupRef> getGroups() {
-        return groups;
+    public Set<GroupRef> getGroups() {
+        return ImmutableSet.copyOf(groups);
     }
 
     /**
-     * Gets a list of entitlements for the user that represent a thing the User has.
+     * Gets a Set of entitlements for the user that represent a thing the User has.
      * 
      * <p>
      * For more detailed information please look at the <a
@@ -360,14 +366,14 @@ public class User extends Resource {
      * 6.2</a>
      * </p>
      * 
-     * @return a list of all entitlements of the {@link User}
+     * @return a Set of all entitlements of the {@link User}
      */
-    public List<Entitlement> getEntitlements() {
-        return entitlements;
+    public Set<Entitlement> getEntitlements() {
+        return ImmutableSet.copyOf(entitlements);
     }
 
     /**
-     * Gets a list of roles for the user that collectively represent who the User is.
+     * Gets a Set of roles for the user that collectively represent who the User is.
      * 
      * <p>
      * For more detailed information please look at the <a
@@ -375,14 +381,14 @@ public class User extends Resource {
      * 6.2</a>
      * </p>
      * 
-     * @return a list of the roles of the {@link User}
+     * @return a Set of the roles of the {@link User}
      */
-    public List<Role> getRoles() {
-        return roles;
+    public Set<Role> getRoles() {
+        return ImmutableSet.copyOf(roles);
     }
 
     /**
-     * Gets a list of certificates issued to the user. Values are Binary and DER encoded x509.
+     * Gets a Set of certificates issued to the user. Values are Binary and DER encoded x509.
      * 
      * <p>
      * For more detailed information please look at the <a
@@ -390,10 +396,10 @@ public class User extends Resource {
      * 6.2</a>
      * </p>
      * 
-     * @return a list of the certificates of the {@link User}
+     * @return a Set of the certificates of the {@link User}
      */
-    public List<X509Certificate> getX509Certificates() {
-        return x509Certificates;
+    public Set<X509Certificate> getX509Certificates() {
+        return ImmutableSet.copyOf(x509Certificates);
     }
 
     /**
@@ -445,15 +451,15 @@ public class User extends Resource {
         private String nickName;
         private String displayName;
         private Name name;
-        private List<Email> emails = new ArrayList<>();
-        private List<PhoneNumber> phoneNumbers = new ArrayList<>();
-        private List<Im> ims = new ArrayList<>();
-        private List<Photo> photos = new ArrayList<>();
-        private List<Address> addresses = new ArrayList<>();
-        private List<GroupRef> groups = new ArrayList<>();
-        private List<Entitlement> entitlements = new ArrayList<>();
-        private List<Role> roles = new ArrayList<>();
-        private List<X509Certificate> x509Certificates = new ArrayList<>();
+        private Set<Email> emails = new HashSet<>();
+        private Set<PhoneNumber> phoneNumbers = new HashSet<>();
+        private Set<Im> ims = new HashSet<>();
+        private Set<Photo> photos = new HashSet<>();
+        private Set<Address> addresses = new HashSet<>();
+        private Set<GroupRef> groups = new HashSet<>();
+        private Set<Entitlement> entitlements = new HashSet<>();
+        private Set<Role> roles = new HashSet<>();
+        private Set<X509Certificate> x509Certificates = new HashSet<>();
         private Map<String, Extension> extensions = new HashMap<>();
 
         /**
@@ -649,7 +655,7 @@ public class User extends Resource {
          *        the emails as Set
          * @return the builder itself
          */
-        public Builder setEmails(List<Email> emails) {
+        public Builder setEmails(Set<Email> emails) {
             this.emails = emails;
             return this;
         }
@@ -658,10 +664,10 @@ public class User extends Resource {
          * Sets the phone numbers for the User (See {@link User#getPhoneNumbers()}).
          * 
          * @param phoneNumbers
-         *        the phone numbers of the the {@link User}
+         *        the phone numbers of the {@link User}
          * @return the builder itself
          */
-        public Builder setPhoneNumbers(List<PhoneNumber> phoneNumbers) {
+        public Builder setPhoneNumbers(Set<PhoneNumber> phoneNumbers) {
             this.phoneNumbers = phoneNumbers;
             return this;
         }
@@ -670,10 +676,10 @@ public class User extends Resource {
          * Sets the instant messaging addresses for the User (See {@link User#getIms()}).
          * 
          * @param ims
-         *        a list of the ims of the {@link User}
+         *        a Set of the ims of the {@link User}
          * @return the builder itself
          */
-        public Builder setIms(List<Im> ims) {
+        public Builder setIms(Set<Im> ims) {
             this.ims = ims;
             return this;
         }
@@ -685,7 +691,7 @@ public class User extends Resource {
          *        the photos of the {@link User}
          * @return the builder itself
          */
-        public Builder setPhotos(List<Photo> photos) {
+        public Builder setPhotos(Set<Photo> photos) {
             this.photos = photos;
             return this;
         }
@@ -694,67 +700,67 @@ public class User extends Resource {
          * Sets the physical mailing addresses for this User (See {@link User#getAddresses()}).
          * 
          * @param addresses
-         *        a list of the addresses of the {@link User}
+         *        a Set of the addresses of the {@link User}
          * @return the builder itself
          */
-        public Builder setAddresses(List<Address> addresses) {
+        public Builder setAddresses(Set<Address> addresses) {
             this.addresses = addresses;
             return this;
         }
 
         /**
-         * Sets a list of groups that the user belongs to (See {@link User#getGroups()})
+         * Sets a Set of groups that the user belongs to (See {@link User#getGroups()})
          * 
          * @param groups
          *        groups of the User
          * @return the builder itself
          */
-        public Builder setGroups(List<GroupRef> groups) {
+        public Builder setGroups(Set<GroupRef> groups) {
             this.groups = groups;
             return this;
         }
 
         /**
-         * Sets a list of entitlements for the User (See {@link User#getEntitlements()}).
+         * Sets a Set of entitlements for the User (See {@link User#getEntitlements()}).
          * 
          * @param entitlements
          *        the entitlements of the {@link User}
          * @return the builder itself
          */
-        public Builder setEntitlements(List<Entitlement> entitlements) {
+        public Builder setEntitlements(Set<Entitlement> entitlements) {
             this.entitlements = entitlements;
             return this;
         }
 
         /**
-         * Sets a list of roles for the User (See {@link User#getRoles()}).
+         * Sets a Set of roles for the User (See {@link User#getRoles()}).
          * 
          * @param roles
-         *        a list of roles
+         *        a Set of roles
          * @return the builder itself
          */
-        public Builder setRoles(List<Role> roles) {
+        public Builder setRoles(Set<Role> roles) {
             this.roles = roles;
             return this;
         }
 
         /**
-         * Sets a list of certificates issued to the User (See {@link User#getX509Certificates()}).
+         * Sets a Set of certificates issued to the User (See {@link User#getX509Certificates()}).
          * 
          * @param x509Certificates
          *        the certificates of the {@link User}
          * @return the builder itself
          */
-        public Builder setX509Certificates(List<X509Certificate> x509Certificates) {
+        public Builder setX509Certificates(Set<X509Certificate> x509Certificates) {
             this.x509Certificates = x509Certificates;
             return this;
         }
 
         /**
-         * Sets a List of Extension to the User (See {@link User#getAllExtensions()}).
+         * Sets a Set of Extension to the User (See {@link User#getAllExtensions()}).
          * 
          * @param extensions
-         *        a list of extensions
+         *        a Set of extensions
          * @return the builder itself
          */
         public Builder addExtensions(Set<Extension> extensions) {
