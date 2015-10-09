@@ -29,6 +29,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableBiMap;
+import com.google.common.collect.ImmutableList;
 import org.osiam.resources.exception.SCIMDataValidationException;
 
 import java.io.Serializable;
@@ -277,7 +279,7 @@ public class User extends Resource implements Serializable {
      * @return the email addresses of the {@link User}
      */
     public List<Email> getEmails() {
-        return emails;
+        return ImmutableList.copyOf(emails);
     }
 
     /**
@@ -313,7 +315,7 @@ public class User extends Resource implements Serializable {
      * @return the phone numbers of the {@link User}
      */
     public List<PhoneNumber> getPhoneNumbers() {
-        return phoneNumbers;
+        return ImmutableList.copyOf(phoneNumbers);
     }
 
     /**
@@ -327,7 +329,7 @@ public class User extends Resource implements Serializable {
      * @return the ims of the {@link User}
      */
     public List<Im> getIms() {
-        return ims;
+        return ImmutableList.copyOf(ims);
     }
 
     /**
@@ -341,7 +343,7 @@ public class User extends Resource implements Serializable {
      * @return the photo URL's of the {@link User}
      */
     public List<Photo> getPhotos() {
-        return photos;
+        return ImmutableList.copyOf(photos);
     }
 
     /**
@@ -355,7 +357,7 @@ public class User extends Resource implements Serializable {
      * @return the addresses of the {@link User}
      */
     public List<Address> getAddresses() {
-        return addresses;
+        return ImmutableList.copyOf(addresses);
     }
 
     /**
@@ -369,7 +371,7 @@ public class User extends Resource implements Serializable {
      * @return a list of all {@link Group}s where the {@link User} is a member of
      */
     public List<GroupRef> getGroups() {
-        return groups;
+        return ImmutableList.copyOf(groups);
     }
 
     /**
@@ -383,7 +385,7 @@ public class User extends Resource implements Serializable {
      * @return a list of all entitlements of the {@link User}
      */
     public List<Entitlement> getEntitlements() {
-        return entitlements;
+        return ImmutableList.copyOf(entitlements);
     }
 
     /**
@@ -397,7 +399,7 @@ public class User extends Resource implements Serializable {
      * @return a list of the roles of the {@link User}
      */
     public List<Role> getRoles() {
-        return roles;
+        return ImmutableList.copyOf(roles);
     }
 
     /**
@@ -411,7 +413,7 @@ public class User extends Resource implements Serializable {
      * @return a list of the certificates of the {@link User}
      */
     public List<X509Certificate> getX509Certificates() {
-        return x509Certificates;
+        return ImmutableList.copyOf(x509Certificates);
     }
 
     /**
@@ -421,7 +423,7 @@ public class User extends Resource implements Serializable {
      */
     @JsonAnyGetter
     public Map<String, Extension> getExtensions() {
-        return Collections.unmodifiableMap(extensions);
+        return ImmutableBiMap.copyOf(extensions);
     }
 
     /**
@@ -433,7 +435,7 @@ public class User extends Resource implements Serializable {
      * @throws NoSuchElementException   If extension with given urn is not available
      */
     public Extension getExtension(String urn) {
-        if (urn == null || urn.isEmpty()) {
+        if (Strings.isNullOrEmpty(urn)) {
             throw new IllegalArgumentException("urn must be neither null nor empty");
         }
 
