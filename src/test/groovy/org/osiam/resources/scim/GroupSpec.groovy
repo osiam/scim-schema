@@ -55,26 +55,21 @@ class GroupSpec extends Specification {
         group.id == 'id'
     }
 
-    def 'should be able to enrich group members'() {
-        given:
-        def group = new Group.Builder('display').build()
+    def 'should be able to add single member to the group via builder'() {
         when:
-        group.members.add(new MemberRef.Builder().build())
+        def group = new Group.Builder('display').addMember(new MemberRef.Builder().build()).build()
 
         then:
         group.members.size() == 1
     }
 
-    def 'members should be a must exist implementation'() {
+    def 'list of members is immutable'() {
         given:
         def group = new Group.Builder('display').build()
-
         when:
         group.members.add(new MemberRef.Builder().build())
-
         then:
-        group.members != null
-
+        thrown(UnsupportedOperationException)
     }
 
     def 'should contain empty public constructor for json serializing'() {
